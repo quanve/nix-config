@@ -28,8 +28,10 @@
 
   services.resolved = {
     enable = lib.mkDefault true;
-    dnssec = lib.mkDefault "allow-downgrade";
-    domains = lib.mkDefault [ "~." ];
-    fallbackDns = lib.mkDefault [ "1.1.1.1" "8.8.8.8" ];
+    settings.Resolve = {
+      DNSSEC = lib.mkDefault "allow-downgrade";
+      Domains = lib.mkDefault [ "~." ];
+      FallbackDNS = lib.mkDefault [ "1.1.1.1" "8.8.8.8" ];
+    };
   };
 }

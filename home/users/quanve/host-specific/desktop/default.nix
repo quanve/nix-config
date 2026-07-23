@@ -1,11 +1,8 @@
 { config, pkgs, inputs, ... }:
 let
   enabledProfiles = [
-    "hyprland/caelestia"
-    # "hyprland/Ambxst"
-    # "hyprland/waybar"
-    # "dwm/dwm"
-    # "niri/someprofile"
+    "niri/waybar"
+    "river"
   ];
 
   profileImports = map (profile: ./profiles + "/${profile}") enabledProfiles;

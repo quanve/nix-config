@@ -1,34 +1,65 @@
 { config, pkgs, lib, ... }:
+
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
-    kernelModules = [ "tun" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" "v4l2loopback" ];
+    resumeDevice = "/dev/mapper/luks-ssd";
+    
+    kernelModules = [ "tun" "v4l2loopback" "tpm_tis" ];
+    
     kernelParams = [
       "intel_iommu=on"
       "iommu=pt"
-      "vfio-pci.ids=10de:1c82,10de:0fb9"
-      "pcie_aspm=off"
+      "resume_offset=533760"
+      "8250.nr_uarts=0"
+      "printk.always_kmsg_dump=1"
     ];
-    blacklistedKernelModules = [ ]; # = [ "nvidia" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" "nouveau" ];
-    extraModprobeConfig = ''
-      options vfio-pci ids=10de:1c82,10de:0fb9
 
-      options r8169 use_dac=0
-      options r8169 aspm=0
-      options r8169 msi=0
-    '';
-  };
+    blacklistedKernelModules = [
+      "bluetooth" "btusb"
+      "thunderbolt"
+      "uvcvideo"
+    ];
 
-  boot.loader = {
-    systemd-boot = {
-      enable = false;
+    extraModulePackages = with config.boot.kernelPackages; [
+      v4l2loopback
+    ];
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
     };
-    efi.canTouchEfiVariables = true;
+
+    loader = {
+      systemd-boot = {
+        enable = false;
+      };
+      efi.canTouchEfiVariables = true;
+    };
+
+    initrd.systemd.enable = true;
   };
 
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
+  specialisation = {
+    vfio-passthrough = {
+      configuration = {
+        boot = {
+          kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+          
+          kernelParams = [ 
+            "intel_iommu=on" 
+            "iommu=pt" 
+            "vfio-pci.ids=10de:1c82,10de:0fb9" 
+          ];
+
+          blacklistedKernelModules = [ "nvidia" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" "nouveau" ];
+          
+          extraModprobeConfig = ''
+            options vfio-pci ids=10de:1c82,10de:0fb9
+          '';
+        };
+      };
+    };
   };
 }

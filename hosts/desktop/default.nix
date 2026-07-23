@@ -17,6 +17,6 @@ let
 in
 {
   imports = map (module: ./${module}.nix) systemModules;
-  
+
   system.stateVersion = "25.05";
 }

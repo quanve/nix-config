@@ -1,12 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }:
 {
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
     nftables.enable = true;
-    # wireless.enable = true; # Uncomment for wpa_supplicant
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
   time.timeZone = "Europe/Zurich";
@@ -26,12 +23,30 @@
     };
   };
 
-  services.resolved = {
-    enable = true;
-    dnssec = "allow-downgrade";
-    domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1" "8.8.8.8" ];
+  services = {
+    resolved = {
+      enable = true;
+      settings.Resolve = {
+        DNSSEC = "true";
+        Domains = [ "~." ];
+        FallbackDNS = [ "1.1.1.1#cloudflare-dns.com" "8.8.8.8#dns.google" ];
+      };
+    };
+
+    syncthing = {
+      enable = true;
+      user = user;
+      group = "users";
+      dataDir = "/home/${user}";
+      openDefaultPorts = true;
+    };
+
+    mullvad-vpn = {
+      enable = true;
+    };
   };
+
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   systemd.services.amnezia-vpn-daemon = {
     enable = true;

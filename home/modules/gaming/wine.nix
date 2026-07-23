@@ -1,11 +1,9 @@
 { config, pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
-    protonup-qt
-    winetricks
     protonplus
+    # portproton
     heroic
-    lutris
     wine
   ];
 }

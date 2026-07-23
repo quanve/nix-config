@@ -15,13 +15,19 @@
 
   boot.initrd.luks.devices = {
     "luks-ssd" = {
-      device = "/dev/disk/by-uuid/e31c8c4d-caca-4e18-a894-ee59a8c87e0e";
-      crypttabExtraOpts = [ ];
+      device = "/dev/disk/by-partlabel/ssd-root";
+      crypttabExtraOpts = [
+        "tpm2-device=auto"
+        "tpm2-measure-pcr=yes"
+      ];
     };
-  
+
     "luks-hdd" = {
-      device = "/dev/disk/by-uuid/258ef068-736c-47e1-a942-2f9b23ce375a";
-      crypttabExtraOpts = [ ];
+      device = "/dev/disk/by-partlabel/hdd-storage";
+      crypttabExtraOpts = [
+        "tpm2-device=auto"
+        "tpm2-measure-pcr=yes"
+      ];
     };
   };
 
@@ -46,7 +52,7 @@
   fileSystems."/swap" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = [ "subvol=@swap" "noatime" ];
+      options = [ "subvol=@swap" "noatime" "nodatacow" ];
     };
 
   fileSystems."/boot" =
@@ -68,7 +74,10 @@
     };
 
   swapDevices = [
-    { device = "/swap/swapfile"; }
+    {
+      device = "/swap/swapfile";
+      priority = -1;
+    }
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

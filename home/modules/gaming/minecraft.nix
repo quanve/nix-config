@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
-    zed-editor
-    micro
+    prismlauncher
   ];
 }

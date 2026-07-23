@@ -1,10 +1,4 @@
-{ config, pkgs, lib, ... }:
-
-let 
-  myDwm = pkgs.dwm.overrideAttrs (old: {
-    src = ./dwm-src;
-  });
-in
+{ config, pkgs, lib, inputs, ... }:
 {
   services = {
     xserver = {
@@ -14,12 +8,8 @@ in
         layout = "us";
         variant = "";
       };
-      windowManager.dwm = {
-        enable = true;
-        package = myDwm;
-      };
     };
-  
+
     flatpak = {
       enable = true;
     };
@@ -28,7 +18,7 @@ in
       gnome-keyring.enable = true;
       gcr-ssh-agent.enable = true;
     };
-  
+
     displayManager.ly.enable = true;
     gvfs.enable = true;
   };
@@ -38,20 +28,35 @@ in
       enable = true;
       tunMode.enable = true;
     };
+
     firejail.enable = true;
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
-	    
+
+    niri.enable = true;
+
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-	
-    honkers-railway-launcher.enable = true;
-    sleepy-launcher.enable = true;
+
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      # xdg-desktop-portal-hyprland
+      # xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "*";
+  };
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
   };
 }

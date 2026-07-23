@@ -2,14 +2,15 @@
 {
   home.packages = with pkgs; [
     wl-clipboard
+    grimblast
+    libinput
     hyprlock
     mpvpaper
     ydotool
-    fuzzel
     zenity
     ffmpeg
     slurp
     grim
-    rofi
+    wbg
   ];
 }

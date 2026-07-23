@@ -4,6 +4,7 @@
   virtualisation.libvirtd.qemu = {
     package = pkgs.qemu_kvm;
     swtpm.enable = true;
+    runAsRoot = true;
   };
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
@@ -13,6 +14,7 @@
     virt-manager
     virt-viewer
     libguestfs
+    virtiofsd
     qemu_kvm
     dnsmasq
     swtpm
@@ -21,5 +23,5 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false;
 }

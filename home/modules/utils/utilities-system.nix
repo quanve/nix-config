@@ -1,9 +1,10 @@
 { config, pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
-    openssl_legacy
-    cpulimit
+    android-tools
+    # cpulimit
     usbutils
+    openssl
     pamixer
     parted
     cmake
@@ -14,9 +15,9 @@
     wget
     btop
     tree
-    htop
+    # htop
     dig
-    git
     jq
+    fd
   ];
 }

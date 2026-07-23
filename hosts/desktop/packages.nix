@@ -8,15 +8,20 @@
     systemPackages = with pkgs; [
       # System-level dependencies
       nvidia-vaapi-driver
+      xwayland-satellite
       wayland-protocols
-      gnome-bluetooth
-      gnome-keyring
       btrfs-progs
       libva-utils
+      tpm2-tools
       efitools
       libvdpau
+      ethtool
       libva
       sbctl
+      git
+
+      r2modman
+      
     ];
   };
 }

@@ -2,6 +2,7 @@
 
 let
   gamingModules = [
+    "minecraft"
     "wine"
   ];
 in

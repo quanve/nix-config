@@ -3,9 +3,11 @@
   home.packages = with pkgs; [
     qbittorrent
     libreoffice
-    wireshark
+    # wireshark
+    keepassxc
     libnotify
     fastfetch
     testdisk
+    typst
   ];
 }
