@@ -104,7 +104,7 @@ window-rule {
 }
 
 binds {
-    Mod+Return       { spawn "kitty"; }
+    Mod+Return       { spawn "foot"; }
     Mod+E            { spawn "nautilus" "--new-window"; }
     Mod+D            { spawn "fuzzel"; }
     Mod+Shift+F      { spawn "firefox"; }

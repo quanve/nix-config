@@ -1,9 +1,10 @@
 { config, pkgs, inputs, libx, ... }:
 {
   imports = [
-    ./dunst.nix
     ./fuzzel.nix
     ./waybar.nix
+    ./dunst.nix
+    ./foot.nix
   ];
 
   xdg.configFile = libx.configBuilder.make {
