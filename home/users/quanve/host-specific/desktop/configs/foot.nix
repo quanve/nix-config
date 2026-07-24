@@ -1,12 +1,11 @@
 { pkgs, ... }:
-
 {
   programs.foot = {
     enable = true;
 
     settings = {
       main = {
-        shell = "${pkgs.fish}/bin/fish";
+        shell = "${pkgs.zsh}/bin/zsh";
         font = "SpaceMono Nerd Font:size=11";
         pad = "22x22";
       };

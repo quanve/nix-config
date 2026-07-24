@@ -5,6 +5,7 @@
     ./waybar.nix
     ./dunst.nix
     ./foot.nix
+    ./zsh.nix
   ];
 
   xdg.configFile = libx.configBuilder.make {
