@@ -4,6 +4,7 @@
     qbittorrent
     libreoffice
     # wireshark
+    localsend
     keepassxc
     libnotify
     fastfetch

@@ -31,18 +31,23 @@
 
     firejail.enable = true;
 
-    niri.enable = true;
-
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
+    
+    niri.enable = true;
 
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    localsend = {
+      enable = true;
+      openFirewall = true;
     };
   };
 

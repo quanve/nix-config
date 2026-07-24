@@ -17,10 +17,6 @@
     nixvim = {
       url = "github:nix-community/nixvim";
     };
-
-    niri = {
-      url = "github:sodiboo/niri-flake";
-    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -43,7 +39,6 @@
         modules = lib.flatten [
           {
             nixpkgs.overlays = [
-	      inputs.niri.overlays.niri
               (import ./overlays)
             ];
           }
@@ -62,7 +57,6 @@
 
               sharedModules = [
                 inputs.nixvim.homeModules.nixvim
-		inputs.niri.homeModules.niri
               ];
 
               extraSpecialArgs = {
