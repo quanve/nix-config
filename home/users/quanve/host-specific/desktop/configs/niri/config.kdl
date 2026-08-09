@@ -11,7 +11,7 @@ environment {
 
 spawn-at-startup "waybar"
 spawn-at-startup "dunst"
-spawn-at-startup "bash" "-c" "/home/quanve/.config/niri/switch_wallpaper.sh start"
+spawn-at-startup "/home/quanve/.config/niri/switch_wallpaper.sh" "start"
 
 input {
     keyboard {
@@ -39,7 +39,7 @@ layout {
         left   15
         right  17
         top    15
-        bottom 15
+        bottom 17
     }
 
     focus-ring {
@@ -165,7 +165,7 @@ binds {
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
     XF86AudioPause allow-when-locked=true { spawn "playerctl" "play-pause"; }
 
-    Ctrl+Alt+Delete  { spawn "bash" "-c" "~/.config/fuzzel/powermenu.sh"; }
+    Ctrl+Alt+Delete  { spawn "powermenu"; }
     Mod+L            { spawn "hyprlock"; }
     Mod+Shift+E      { quit; }
 

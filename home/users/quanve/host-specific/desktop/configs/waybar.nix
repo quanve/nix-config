@@ -7,6 +7,7 @@
       {
         layer = "top";
         position = "top";
+
         margin-top = 0;
         margin-bottom = -11;
         margin-left = 4;
@@ -51,7 +52,7 @@
         };
 
         clock = {
-          format = "<span color='#cdd6f4'><b>  {:%a %e %b %H:%M}</b></span>  ";
+          format = "<span color='#cdd6f4'><b> {:%a %d %b %H:%M}</b></span> ";
           tooltip-format = "<tt>{calendar}</tt>";
           calendar = {
             mode = "year";
@@ -147,7 +148,7 @@
           background: #11111b;
           box-shadow: 0 0 4pt #11111b;
           border-radius: 12pt;
-          margin: 6pt;
+	  margin: 6pt;
           padding: 2pt;
       }
       #workspaces {

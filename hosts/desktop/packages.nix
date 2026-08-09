@@ -18,10 +18,6 @@
       ethtool
       libva
       sbctl
-      git
-
-      r2modman
-      
     ];
   };
 }

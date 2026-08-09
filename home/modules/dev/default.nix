@@ -5,6 +5,7 @@ let
     "reverse-engineering"
     "development"
     "vpn"
+    "git"
   ];
 in
 {
