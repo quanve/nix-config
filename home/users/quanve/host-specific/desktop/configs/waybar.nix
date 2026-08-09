@@ -12,8 +12,16 @@
         margin-left = 4;
         margin-right = 4;
 
-        modules-left = [ "niri/workspaces" "mpris" "niri/window" ];
-        modules-center = [ "cpu" "memory" "custom/gpu" ];
+        modules-left = [
+          "niri/workspaces"
+          "mpris"
+          "niri/window"
+        ];
+        modules-center = [
+          "cpu"
+          "memory"
+          "custom/gpu"
+        ];
         modules-right = [
           "pulseaudio"
           "niri/language"
@@ -100,7 +108,11 @@
           format-bluetooth-muted = "󰝟 ";
           format-icons = {
             headset = "";
-            default = [ "󰕿 " "󰖀 " "󰕾 " ];
+            default = [
+              "󰕿 "
+              "󰖀 "
+              "󰕾 "
+            ];
           };
           tooltip = true;
           on-click = "pavucontrol";
@@ -126,112 +138,112 @@
     ];
 
     style = ''
-      * {
-          margin: 0;
-          padding: 0;
-          font-family: "JetBrainsMono Nerd Font";
-          font-size: 8.5pt;
-          font-weight: 800;
-          transition-property: background;
-          transition-duration: 0.5s;
-      }
-      tooltip {
-          background: #11111b;
-          color: #cdd6f4;
-          border-radius: 5pt;
-      }
-      #waybar.top {
-          background: none;
-      }
-      #waybar.top > box.horizontal {
-          background: #11111b;
-          box-shadow: 0 0 4pt #11111b;
-          border-radius: 12pt;
-	  margin: 6pt;
-          padding: 2pt;
-      }
-      #workspaces {
-          margin-left: 12pt;
-      }
-      #workspaces button {
-          color: #585b70;
-      }
-      #workspaces button:not(:first-child) {
-          margin-left: 2pt;
-      }
-      #workspaces button.visible {
-          color: #89b4fa;
-      }
-      #workspaces button.active {
-          color: #f38ba8;
-      }
-      #workspaces button:hover,
-      #workspaces button:focus {
-          background: none;
-          border-color: transparent;
-          box-shadow: none;
-      }
-      #workspaces button:hover:not(.active):not(.visible),
-      #workspaces button:focus:not(.active):not(.visible) {
-          color: #9399b2;
-      }
-      #mpris {
-          background: #1e1e2e;
-          color: #a6e3a1;
-          border-radius: 12pt;
-          margin-left: 15pt;
-          padding: 0 8pt;
-      }
-      #window {
-          margin-left: 15pt;
-          margin-right: 20pt;
-      }
-      #cpu {
-          color: #b4befe;
-          margin-right: 10pt;
-      }
-      #memory {
-          color: #fab387;
-          margin-right: 10pt;
-      }
-      #custom-gpu {
-          color: #a6e3a1;
-          margin-right: 10pt;
-      }
-      #pulseaudio {
-          color: #74c7ec;
-          margin-right: 10pt;
-      }
-      #language {
-          color: #74c7ec;
-          margin-right: 10pt;
-          padding: 0;
-          min-width: 1.8em;
-          font-weight: 900;
-      }
-      #tray {
-          margin-right: 10pt;
-      }
-      #tray menu {
-          background: #1e1e2e;
-          padding: 2pt;
-      }
-      #tray menu * {
-          margin: 2pt;
-      }
-      #tray menu check {
-          margin-right: 4pt;
-      }
-      #custom-power {
-          margin-right: 11pt;
-          font-size: 10pt;
-      }
-      @keyframes blink {
-          to {
-              background-color: rgba(30, 34, 42, 0.5);
-              color: #cdd6f4;
-          }
-      }
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: "JetBrainsMono Nerd Font";
+                font-size: 8.5pt;
+                font-weight: 800;
+                transition-property: background;
+                transition-duration: 0.5s;
+            }
+            tooltip {
+                background: #11111b;
+                color: #cdd6f4;
+                border-radius: 5pt;
+            }
+            #waybar.top {
+                background: none;
+            }
+            #waybar.top > box.horizontal {
+                background: #11111b;
+                box-shadow: 0 0 4pt #11111b;
+                border-radius: 12pt;
+      	  margin: 6pt;
+                padding: 2pt;
+            }
+            #workspaces {
+                margin-left: 12pt;
+            }
+            #workspaces button {
+                color: #585b70;
+            }
+            #workspaces button:not(:first-child) {
+                margin-left: 2pt;
+            }
+            #workspaces button.visible {
+                color: #89b4fa;
+            }
+            #workspaces button.active {
+                color: #f38ba8;
+            }
+            #workspaces button:hover,
+            #workspaces button:focus {
+                background: none;
+                border-color: transparent;
+                box-shadow: none;
+            }
+            #workspaces button:hover:not(.active):not(.visible),
+            #workspaces button:focus:not(.active):not(.visible) {
+                color: #9399b2;
+            }
+            #mpris {
+                background: #1e1e2e;
+                color: #a6e3a1;
+                border-radius: 12pt;
+                margin-left: 15pt;
+                padding: 0 8pt;
+            }
+            #window {
+                margin-left: 15pt;
+                margin-right: 20pt;
+            }
+            #cpu {
+                color: #b4befe;
+                margin-right: 10pt;
+            }
+            #memory {
+                color: #fab387;
+                margin-right: 10pt;
+            }
+            #custom-gpu {
+                color: #a6e3a1;
+                margin-right: 10pt;
+            }
+            #pulseaudio {
+                color: #74c7ec;
+                margin-right: 10pt;
+            }
+            #language {
+                color: #74c7ec;
+                margin-right: 10pt;
+                padding: 0;
+                min-width: 1.8em;
+                font-weight: 900;
+            }
+            #tray {
+                margin-right: 10pt;
+            }
+            #tray menu {
+                background: #1e1e2e;
+                padding: 2pt;
+            }
+            #tray menu * {
+                margin: 2pt;
+            }
+            #tray menu check {
+                margin-right: 4pt;
+            }
+            #custom-power {
+                margin-right: 11pt;
+                font-size: 10pt;
+            }
+            @keyframes blink {
+                to {
+                    background-color: rgba(30, 34, 42, 0.5);
+                    color: #cdd6f4;
+                }
+            }
     '';
   };
 }

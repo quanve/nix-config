@@ -2,7 +2,11 @@
 let
   powermenu = pkgs.writeShellApplication {
     name = "powermenu";
-    runtimeInputs = [ pkgs.fuzzel pkgs.hyprland pkgs.systemd ];
+    runtimeInputs = [
+      pkgs.fuzzel
+      pkgs.hyprland
+      pkgs.systemd
+    ];
     text = ''
       options=" Shutdown\n Reboot\n󰍃 Logout\n Suspend\n Lock"
 

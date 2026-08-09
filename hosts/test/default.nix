@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    # ./hardware-configuration.nix   # ← сгенерируете позже
+    # ./hardware-configuration.nix
     ./users.nix
   ];
 

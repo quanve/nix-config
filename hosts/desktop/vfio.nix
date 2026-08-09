@@ -11,7 +11,12 @@
   # and IOMMU must be enabled in the firmware.
   specialisation.vfio-passthrough = {
     configuration.boot = {
-      kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+      kernelModules = [
+        "vfio"
+        "vfio_iommu_type1"
+        "vfio_pci"
+        "vfio_virqfd"
+      ];
 
       kernelParams = [
         "intel_iommu=on"
@@ -19,7 +24,13 @@
         "vfio-pci.ids=10de:1c82,10de:0fb9"
       ];
 
-      blacklistedKernelModules = [ "nvidia" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" "nouveau" ];
+      blacklistedKernelModules = [
+        "nvidia"
+        "nvidia_drm"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nouveau"
+      ];
 
       extraModprobeConfig = ''
         options vfio-pci ids=10de:1c82,10de:0fb9

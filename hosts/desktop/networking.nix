@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   services.resolved.settings.Resolve = {
     DNSSEC = "true";

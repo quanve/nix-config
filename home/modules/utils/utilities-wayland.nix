@@ -1,9 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.myHome.modules.utils.utilities-wayland;
 in
 {
-  options.myHome.modules.utils.utilities-wayland.enable = lib.mkEnableOption "utils/utilities-wayland";
+  options.myHome.modules.utils.utilities-wayland.enable =
+    lib.mkEnableOption "utils/utilities-wayland";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

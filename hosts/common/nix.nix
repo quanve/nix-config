@@ -3,7 +3,10 @@
   nix = {
     settings = {
       auto-optimise-store = lib.mkDefault true;
-      experimental-features = lib.mkDefault [ "nix-command" "flakes" ];
+      experimental-features = lib.mkDefault [
+        "nix-command"
+        "flakes"
+      ];
       warn-dirty = lib.mkDefault false;
       substituters = lib.mkDefault [
         "https://cache.nixos.org/"

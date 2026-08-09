@@ -2,7 +2,14 @@
 let
   dunstMenu = pkgs.writeShellApplication {
     name = "dunst-menu";
-    runtimeInputs = [ pkgs.dunst pkgs.jq pkgs.fuzzel pkgs.gawk pkgs.wl-clipboard pkgs.libnotify ];
+    runtimeInputs = [
+      pkgs.dunst
+      pkgs.jq
+      pkgs.fuzzel
+      pkgs.gawk
+      pkgs.wl-clipboard
+      pkgs.libnotify
+    ];
     text = ''
       command -v dunstctl >/dev/null || exit 1
       command -v jq >/dev/null || exit 1

@@ -1,4 +1,9 @@
-{ config, lib, inputs, ... }:
+{
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
   cfg = config.myHome.modules.utils.nixvim;
 in
@@ -65,7 +70,10 @@ in
           mode = "n";
           key = "<leader>e";
           action = "<cmd>Neotree toggle<cr>";
-          options = { desc = "Toggle Neo-tree"; silent = true; };
+          options = {
+            desc = "Toggle Neo-tree";
+            silent = true;
+          };
         }
       ];
     };

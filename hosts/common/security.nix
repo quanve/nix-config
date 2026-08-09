@@ -31,7 +31,6 @@
     protectKernelImage = lib.mkDefault true;
   };
 
-
   # Kernel hardening.
   # NOTE: keep this a plain list (not `mkDefault`). nixpkgs sets
   # boot.kernelParams at default priority, which would silently drop

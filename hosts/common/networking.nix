@@ -31,7 +31,10 @@
     settings.Resolve = {
       DNSSEC = lib.mkDefault "allow-downgrade";
       Domains = lib.mkDefault [ "~." ];
-      FallbackDNS = lib.mkDefault [ "1.1.1.1" "8.8.8.8" ];
+      FallbackDNS = lib.mkDefault [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
     };
   };
 }

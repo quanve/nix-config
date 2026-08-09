@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.myHome.modules.comms.discord;
 in
@@ -24,7 +29,11 @@ in
       exec = "discord --enable-gpu-rasterization --blink-settings=primaryHoverType=2,primaryPointerType=4 --ozone-platform=x11 %U";
       icon = "discord";
       genericName = "Internet Messenger";
-      categories = [ "Network" "InstantMessaging" "Chat" ];
+      categories = [
+        "Network"
+        "InstantMessaging"
+        "Chat"
+      ];
       terminal = false;
       mimeType = [ "x-scheme-handler/discord" ];
     };

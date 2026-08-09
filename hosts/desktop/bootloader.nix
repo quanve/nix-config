@@ -5,7 +5,11 @@
     supportedFilesystems = [ "btrfs" ];
     resumeDevice = "/dev/mapper/luks-ssd";
 
-    kernelModules = [ "tun" "v4l2loopback" "tpm_tis" ];
+    kernelModules = [
+      "tun"
+      "v4l2loopback"
+      "tpm_tis"
+    ];
 
     kernelParams = [
       "intel_iommu=on"
@@ -16,7 +20,8 @@
     ];
 
     blacklistedKernelModules = [
-      "bluetooth" "btusb"
+      "bluetooth"
+      "btusb"
       "thunderbolt"
       "uvcvideo"
     ];
