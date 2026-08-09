@@ -1,123 +1,177 @@
 # NixOS + Home-Manager Configuration
 
-<img src="https://github.com/user-attachments/assets/4f15d2ae-caf8-4f4d-8aa8-87daa8003280" alt="desktop screenshot" align="right" width="480">
+Multi-host NixOS flake with per-user and per-host **toggleable** Home-Manager modules.
 
-</br>
+- **OS** — NixOS (nixos-unstable, flake-based)
+- **Desktop host** — NVIDIA (legacy_580) + Lanzaboote/Secure Boot, Btrfs + LUKS, niri/Wayland
+- **Privilege escalation** — `doas` (sudo disabled)
+- **Home-Manager** — embedded via the NixOS module (`useGlobalPkgs` / `useUserPackages`)
 
-- **OS** — [NixOS](https://nixos.org/) (unstable / flake-based)
-- **Compositor** — [Hyprland](https://hypr.land/) + **[Caelestia Shell](https://github.com/caelestia-dots/shell)** (custom QML shell)
-- **Bar** — [Waybar](https://github.com/Alexays/Waybar) / [Caelestia](https://github.com/caelestia-dots/shell) (built-in panel)
-- **Terminal** — [Kitty](https://github.com/kovidgoyal/kitty)
-- **Launcher** — [Rofi](https://github.com/davatorium/rofi)
-- **Notifications** — [Dunst](https://github.com/dunst-project/dunst)
-- **Shell** — [Fish](https://github.com/fish-shell/fish-shell)
-- **Display Manager** — [Ly](https://github.com/fairyglade/ly)
-- **Privilege Escalation** — doas (sudo disabled)
-- **Filesystem** — Btrfs + subvolumes + zstd:3 compression
+## Hosts
 
-</br>
+| Host    | Purpose                                                  |
+| ------- | -------------------------------------------------------- |
+| `desktop` | Main desktop: NVIDIA, Secure Boot, VFIO passthrough, virtualization, niri |
+| `test`   | Minimal host (Framework laptop placeholder)              |
 
-## Features
-
-- Fully declarative flake-based configuration
-- Multiple desktop profiles support in Home-Manager
-  - `hyprland/caelestia` — main experimental profile with custom QML shell
-  - `hyprland/waybar` — classic Hyprland + Waybar + Rofi + Dunst
-  - `hyprland/Ambxst` — another QML shell variant (under testing, incomplete)
-  - `hyprland/shared` — common settings (fish, kitty, themes, utilities)
-  - `dwm/dwm` — test / legacy dwm profile
-- Lanzaboote + sbctl (Secure Boot)
-- NVIDIA proprietary drivers + VA-API + power management
-- VFIO GPU passthrough preparation (kernel params and ids are set)
-- Btrfs subvolumes: @, @home, @nix, @swap, @games (nodatacow), @storage
-- doas instead of sudo + kernel hardening parameters
-- AmneziaVPN daemon + throne
-- Gaming stack: steam, gamescope, wine, mangohud, goverlay, heroic, honkers-railway-launcher + sleepy-launcher (HoYoverse gacha games)
-
-## How to Use
-
-### Configuration Structure
+## Structure
 
 ```
-/etc/nixos
-├── flake.nix
+flake.nix                     # host definitions + home-manager wiring
 ├── hosts/
-│   ├── common/           # settings shared across most hosts
-│   │   ├── bootloader.nix
-│   │   ├── networking.nix
-│   │   ├── nix.nix
-│   │   ├── security.nix
-│   │   └── default.nix
-│   └── desktop/          # host-specific settings (nvidia, vfio, btrfs, etc.)
-│       ├── bootloader.nix
-│       ├── hardware.nix
-│       ├── hardware-configuration.nix
-│       ├── virtualization.nix
-│       ├── desktop.nix
-│       └── ...
+│   ├── common/               # shared system config for every host
+│   │   ├── bootloader.nix    # default kernel (linuxPackages_latest)
+│   │   ├── networking.nix    # NetworkManager, nftables, resolved, locale
+│   │   ├── nix.nix           # nix settings, GC, allowUnfree
+│   │   └── security.nix      # firewall, doas, kernel hardening (kernelParams)
+│   ├── desktop/              # main desktop host (each file = one concern)
+│   │   ├── bootloader.nix    # lanzaboote + vfio-passthrough specialisation
+│   │   ├── display.nix       # X server (NVIDIA), ly, niri, portals
+│   │   ├── apps.nix          # steam, throne, firejail, direnv, localsend
+│   │   ├── services.nix      # flatpak, gnome-keyring, syncthing, mullvad, amnezia
+│   │   ├── hardware.nix      # NVIDIA legacy_580, graphics, udev rules
+│   │   ├── hardware-configuration.nix
+│   │   ├── networking.nix    # resolved override (delta from common)
+│   │   ├── packages.nix      # system packages, session variables
+│   │   ├── users.nix         # user account
+│   │   ├── fonts.nix
+│   │   ├── virtualization.nix# libvirt/qemu + virt-manager
+│   │   └── security.nix      # TPM + sysctl (delta from common)
+│   └── test/                 # minimal host (hardware-configuration commented out)
 └── home/
-    ├── common/           # settings shared across users
-    ├── modules/          # modular configurations (e.g. nixcord, firefox, etc.)
-    │   ├── comms/
-    │   ├── core/
-    │   ├── default.nix
-    │   ├── desktop/
-    │   ├── dev/
-    │   ├── gaming/
-    │   └── utils/
+    ├── common/               # user basics + imports ../modules (option registry)
+    ├── modules/              # toggleable home modules (see below)
+    │   ├── comms/    discord, obsidian, telegram
+    │   ├── core/     editors, gnome, terminal
+    │   ├── desktop/  firefox, media, obs-studio, themes
+    │   ├── dev/      development, git, reverse-engineering, vpn
+    │   ├── gaming/   minecraft, wine
+    │   └── utils/    file-management, nixvim, utilities,
+    │                 utilities-system, utilities-wayland, utilities-x11
     └── users/
         └── quanve/
+            ├── default.nix                   # user-level module selection + variants
             └── host-specific/
-                └── desktop/
-                    ├── default.nix
-                    └── profiles/     # profile-specific configurations
-                        ├── dwm/
-                        │   └── dwm/  # test dwm profile
-                        ├── hyprland/
-                        │   ├── Ambxst/     # QML shell (testing, incomplete)
-                        │   ├── caelestia/  # QML shell, custom panel, lockscreen
-                        │   └── waybar/     # classic Hyprland + waybar
-                        └── shared/         # fish, kitty, common utilities & themes
+                ├── desktop/
+                │   ├── default.nix           # desktop-only modules
+                │   └── configs/              # niri, waybar, foot, fuzzel, dunst, zsh
+                └── test/default.nix
+├── lib/config-builder.nix    # `libx`: copies config dirs → xdg.configFile
+└── overlays/
 ```
 
-### Switching Profiles
+## Home modules (`myHome.modules`)
 
-Profiles are selected in the file `home/users/quanve/host-specific/desktop/default.nix`:
+Every leaf file under `home/modules/<category>/` is a self-contained Home-Manager
+module that declares
 
 ```nix
-let
-  enabledProfiles = [
-    "hyprland/caelestia"    # currently active
-    # "hyprland/waybar"     # commented → inactive
-    # "hyprland/Ambxst"     # commented → inactive
-    # "dwm/dwm"             # commented → inactive
-  ];
-in { ... }
+options.myHome.modules.<category>.<name>.enable = lib.mkEnableOption "...";
+config = lib.mkIf config.myHome.modules.<category>.<name>.enable { ... };
 ```
 
-After changing the list of profiles, run:
+so the module code exists **once**, and nothing activates unless explicitly enabled.
+
+### Where modules are enabled
+
+The `home/modules` files are only an *option registry* — they are imported once from
+`home/common/default.nix`, so every user/host sees the options but nothing is on by
+default. The actual selection happens in three layers that merge into one config:
+
+1. `home/users/<user>/default.nix` — what the user wants on **every** host;
+2. `home/users/<user>/host-specific/<host>/default.nix` — what that **host** adds;
+3. `home/common/default.nix` — universal per-user bits (username, state version).
+
+```nix
+# home/users/quanve/default.nix
+{ ... }: {
+  myHome.modules = {
+    comms.discord.enable = true;
+    core.terminal.enable = true;
+    dev.git.enable = true;
+    ...
+  };
+}
+```
+
+```nix
+# home/users/quanve/host-specific/desktop/default.nix
+{ ... }: {
+  myHome.modules = {
+    desktop.firefox.enable = true;
+    gaming.minecraft.enable = true;
+    ...
+  };
+}
+```
+
+A module enabled at the user level applies on all hosts; the host-specific file only
+adds to it. Unknown module names fail loudly at evaluation time
+(`option ... does not exist`), so a typo cannot silently drift the config.
+
+### Variants: one module, different settings
+
+`enable` is just a switch. If a module needs to differ between users or hosts, declare
+more sub-options — variants become *data*, not duplicated code. Example: `git` takes a
+per-user identity instead of hardcoding it:
+
+```nix
+# home/modules/dev/git.nix
+options.myHome.modules.dev.git = {
+  enable = lib.mkEnableOption "dev/git";
+  userName = lib.mkOption { type = lib.types.str; default = ""; ... };
+  userEmail = lib.mkOption { type = lib.types.str; default = ""; ... };
+};
+```
+
+```nix
+# home/users/alice/default.nix — different variant than quanve
+{ ... }: {
+  myHome.modules.dev.git = {
+    enable = true;
+    userName = "alice";
+    userEmail = "alice@example.com";
+  };
+}
+```
+
+Because the user-level and host-level files live in the same module tree, hosts can
+override user-level values: declare the low-priority layer with `lib.mkDefault` and let
+the host set a plain value, or override explicitly with `lib.mkForce`.
+
+## Building / switching
 
 ```bash
-# Full system + home-manager rebuild (most reliable / common case)
-doas nixos-rebuild switch --flake ~/new_nixos#desktop
+# Full system + home-manager rebuild
+doas nixos-rebuild switch --flake /path/to/repo#desktop
 
-# Only home-manager rebuild (faster when system hasn't changed)
-home-manager switch --flake ~/new_nixos#quanve@desktop
+# VFIO passthrough kernel: select the "vfio-passthrough" entry
+# in the systemd-boot menu at boot
 ```
 
-## Additional Information
+Standalone `home-manager switch --flake .#quanve@desktop` is **not** available yet —
+the flake exposes only `nixosConfigurations` (home-manager is embedded). Add a
+`homeConfigurations` output if you want standalone home-manager switching.
 
-- `sudo` is completely disabled — **`doas`** is used instead
-- Configuration tracks **nixos-unstable** channel
-- Recommended package separation:
-  - system-wide → `hosts/desktop/packages.nix`
-  - user-specific → `home/.../packages.nix`
-- Main user config files (kitty, fish, hyprland, rofi, dunst, waybar) are located in `home/.../configs/`
-- After changing any of these configs → run `doas nixos-rebuild switch --flake ~/new_nixos#desktop`
-- **Secure Boot (Lanzaboote)** setup (if not already done):
-  ```bash
-  doas sbctl create-keys
-  doas sbctl enroll-keys --microsoft
-  ```
-- VFIO / GPU passthrough is prepared in kernel parameters, but **not enabled** by default
-  - You need to replace the current PCI ids (GTX 1050 Ti) with your own GPU ids
+## Adding things
+
+**New host:** create `hosts/<name>/default.nix` and
+`home/users/quanve/host-specific/<name>/default.nix`, then register it in `flake.nix`
+(`mkNixos "<name>" ...`).
+
+**New module:** add `home/modules/<category>/<name>.nix` with an `enable` option +
+`mkIf` body (optionally extra variant options), list it in
+`home/modules/<category>/default.nix`, then flip it on in the user or host-specific file.
+
+**New user:** the flake currently hardcodes a single `user = "quanve"`. Multi-user
+support means generalizing `flake.nix` to a list of users, each with its own
+`home/users/<user>/default.nix`.
+
+## Notes
+
+- `sudo` is disabled — use `doas`.
+- Secure Boot via Lanzaboote + sbctl (`/var/lib/sbctl`).
+- Kernel hardening and strict firewall on all hosts (`hosts/common/security.nix`).
+- Desktop uses NVIDIA legacy_580 + VA-API, Btrfs with LUKS (`resumeDevice`, zstd).
+- VFIO GPU passthrough is prepared as a boot specialisation, not enabled by default
+  (replace the PCI ids in `hosts/desktop/bootloader.nix`).
