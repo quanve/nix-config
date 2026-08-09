@@ -6,7 +6,6 @@ let
     "file-management"
     "utilities-x11"
     "utilities"
-    "nixvim"
   ];
 in
 {

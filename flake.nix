@@ -55,10 +55,6 @@
               useUserPackages     = true;
               backupFileExtension = "hm-bak";
 
-              sharedModules = [
-                inputs.nixvim.homeModules.nixvim
-              ];
-
               extraSpecialArgs = {
                 inherit inputs self user;
                 libx = myLib;

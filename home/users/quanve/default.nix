@@ -27,7 +27,6 @@
       utilities.enable = true;
       utilities-system.enable = true;
       file-management.enable = true;
-      nixvim.enable = true;
     };
   };
 }
