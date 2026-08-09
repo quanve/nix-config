@@ -45,7 +45,6 @@
     "nmi_watchdog=0"
     "softlockup_panic=0"
     "pti=on"
-    "vsmap=full"
     "debugfs=off"
   ];
 }
