@@ -14,7 +14,6 @@ let
     "services"
     "users"
     "fonts"
-    "nix"
   ];
 in
 {
