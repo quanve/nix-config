@@ -153,6 +153,12 @@ Standalone `home-manager switch --flake .#quanve@desktop` is **not** available y
 the flake exposes only `nixosConfigurations` (home-manager is embedded). Add a
 `homeConfigurations` output if you want standalone home-manager switching.
 
+## Formatting & CI
+
+- Formatting uses `treefmt` with `nixfmt` (RFC style) via `nix fmt`.
+- CI (`.github/workflows/ci.yml`) runs `nix flake check` on push/PR, which
+  builds the `desktop` toplevel and verifies formatting.
+
 ## Adding things
 
 **New host:** create `hosts/<name>/default.nix` and
