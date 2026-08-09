@@ -1,65 +1,25 @@
-{ config, pkgs, lib, user, ... }:
+{ config, pkgs, lib, ... }:
 {
-  networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
-    nftables.enable = true;
-  };
-
-  time.timeZone = "Europe/Zurich";
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "ru_RU.UTF-8";
-      LC_IDENTIFICATION = "ru_RU.UTF-8";
-      LC_MEASUREMENT = "ru_RU.UTF-8";
-      LC_MONETARY = "ru_RU.UTF-8";
-      LC_NAME = "ru_RU.UTF-8";
-      LC_NUMERIC = "ru_RU.UTF-8";
-      LC_PAPER = "ru_RU.UTF-8";
-      LC_TELEPHONE = "ru_RU.UTF-8";
-      LC_TIME = "ru_RU.UTF-8";
-    };
-  };
-
-  services = {
-    resolved = {
-      enable = true;
-      settings.Resolve = {
-        DNSSEC = "true";
-        Domains = [ "~." ];
-        FallbackDNS = [ "1.1.1.1#cloudflare-dns.com" "8.8.8.8#dns.google" ];
-      };
-    };
-
-    syncthing = {
-      enable = true;
-      user = user;
-      group = "users";
-      dataDir = "/home/${user}";
-      openDefaultPorts = true;
-    };
-
-    mullvad-vpn = {
-      enable = true;
-    };
+  services.resolved.settings.Resolve = {
+    DNSSEC = "true";
+    FallbackDNS = [
+      "1.1.1.1#cloudflare-dns.com"
+      "8.8.8.8#dns.google"
+    ];
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  systemd.services.amnezia-vpn-daemon = {
-    enable = true;
-    description = "AmneziaVPN Daemon";
-    after = [ "network.target" ];
+  # r8169 (RTL8168g) + EEE occasionally fails to negotiate the link on
+  # cold boot; a cable replug fixes it. Disable EEE on the NIC at boot.
+  systemd.services.disable-eee = {
+    description = "Disable Energy Efficient Ethernet on enp3s0";
+    after = [ "network-pre.target" ];
+    before = [ "NetworkManager.service" ];
     wantedBy = [ "multi-user.target" ];
-  
     serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.amnezia-vpn}/bin/AmneziaVPN-service";
-      Restart = "on-failure";
-      RestartSec = 5;
-      User = "root";
+      Type = "oneshot";
+      ExecStart = "${pkgs.ethtool}/bin/ethtool --set-eee enp3s0 eee off";
     };
   };
 }
