@@ -1,5 +1,4 @@
 { lib }:
-
 let
   shouldBeExecutable = filePath: executableList:
     let
@@ -8,7 +7,7 @@ let
     in
       builtins.any (pattern:
         if lib.isString pattern then
-          lib.hasSuffix pattern filePath || 
+          lib.hasSuffix pattern filePath ||
           pattern == fileName ||
           pattern == relativePath
         else if lib.isList pattern then
@@ -21,7 +20,7 @@ let
   processDirectory = dir: targetBase: cfg:
     let
       contents = builtins.readDir dir;
-      
+
       shouldInclude = filePath: relativePath:
         if cfg.include != [] then
           builtins.any (pattern:
@@ -35,7 +34,7 @@ let
             lib.hasSuffix pattern relativePath ||
             lib.hasSuffix pattern (builtins.baseNameOf filePath)
           ) cfg.exclude);
-      
+
       processEntry = name: type:
         let
           fullPath = dir + "/${name}";
@@ -47,26 +46,26 @@ let
         in
           if type == "directory" then
             processDirectory fullPath targetPath cfg
-            
+
           else if type == "regular" then
             if shouldInclude fullPath relativeFromRoot then
               if shouldBeExecutable fullPath cfg.executable then
-                { "${targetPath}" = { 
-                    source = fullPath; 
-                    executable = true; 
+                { "${targetPath}" = {
+                    source = fullPath;
+                    executable = true;
                   };
                 }
               else
                 { "${targetPath}".source = fullPath; }
             else
               {}
-              
+
           else if type == "symlink" then
             { "${targetPath}".source = builtins.readLink fullPath; }
-            
+
           else
             {};
-            
+
     in
       builtins.foldl' (acc: entryName:
         acc // (processEntry entryName contents.${entryName})
@@ -83,9 +82,9 @@ let
         recursive = true;
         description = null;
       };
-      
+
       cfg = defaults // args;
-      
+
       pathExists = builtins.pathExists path;
     in
       if !cfg.enabled then
@@ -101,22 +100,22 @@ let
 in
 {
   from = name: path: buildConfig { inherit name path; };
-  
+
   fromWith = attrs: buildConfig attrs;
-  
+
   fromMany = buildMany;
-  
+
   fromSimpleList = pathsList:
     builtins.listToAttrs (map (name: {
       name = name;
-      value = buildConfig { 
-        inherit name; 
+      value = buildConfig {
+        inherit name;
         path = ./configs/${name};
       };
     }) pathsList);
-  
+
   make = configs:
-    builtins.foldl' (acc: name: 
+    builtins.foldl' (acc: name:
       let
         value = configs.${name};
       in

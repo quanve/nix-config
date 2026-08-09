@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ lib, ... }:
 {
   nix = {
     settings = {
@@ -18,13 +18,13 @@
 
       max-jobs = lib.mkDefault "auto";
     };
-    
+
     gc = {
       automatic = lib.mkDefault true;
       dates = lib.mkDefault "weekly";
       options = lib.mkDefault "--delete-older-than 7d";
     };
-    
+
     extraOptions = lib.mkDefault ''
       min-free = ${toString (512 * 1024 * 1024)}
       max-free = ${toString (1024 * 1024 * 1024)}
@@ -33,7 +33,7 @@
       log-lines = 25
     '';
   };
-  
+
   nixpkgs.config = {
     allowUnfree = lib.mkDefault true;
     # cudaSupport = true;
