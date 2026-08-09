@@ -8,6 +8,7 @@ let
     "packages"
     "hardware"
     "security"
+    "vfio"
     "display"
     "apps"
     "services"
