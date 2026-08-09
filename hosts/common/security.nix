@@ -1,11 +1,13 @@
-{ config, pkgs, lib, user, ... }:
+{ lib, user, ... }:
 {
   # Firewall
   networking.firewall = {
     enable = lib.mkDefault true;
     allowedTCPPorts = lib.mkDefault [ ];
     allowedUDPPorts = lib.mkDefault [ ];
-    checkReversePath = lib.mkDefault "loose";
+    # Strict reverse-path filtering (nixpkgs default). "loose" would
+    # silently weaken the firewall.
+    checkReversePath = lib.mkDefault true;
     logReversePathDrops = lib.mkDefault true;
     allowPing = lib.mkDefault false;
   };
@@ -13,7 +15,7 @@
   # Privilege escalation
   security = {
     sudo.enable = lib.mkDefault false;
-    
+
     doas = {
       enable = lib.mkDefault true;
       extraRules = [
@@ -24,13 +26,17 @@
         }
       ];
     };
-    
+
     # Kernel hardening
     protectKernelImage = lib.mkDefault true;
   };
 
 
-  boot.kernelParams = lib.mkDefault [
+  # Kernel hardening.
+  # NOTE: keep this a plain list (not `mkDefault`). nixpkgs sets
+  # boot.kernelParams at default priority, which would silently drop
+  # an `mkDefault` list (lists concatenate only at equal priority).
+  boot.kernelParams = [
     "slab_nomerge"
     "init_on_alloc=1"
     "init_on_free=1"
