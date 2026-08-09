@@ -1,5 +1,4 @@
-{ config, pkgs, inputs, ... }:
-
+{ ... }:
 let
   systemModules = [
     "hardware-configuration"
@@ -9,7 +8,9 @@ let
     "packages"
     "hardware"
     "security"
-    "desktop"
+    "display"
+    "apps"
+    "services"
     "users"
     "fonts"
     "nix"
