@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 let
   dunstMenu = pkgs.writeShellApplication {
     name = "dunst-menu";

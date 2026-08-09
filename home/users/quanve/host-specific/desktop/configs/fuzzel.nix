@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 let
   powermenu = pkgs.writeShellApplication {
     name = "powermenu";

@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
+let
+  cfg = config.myHome.modules.desktop.firefox;
+in
 {
-  programs.firefox = {
+  options.myHome.modules.desktop.firefox.enable = lib.mkEnableOption "desktop/firefox";
+
+  config = lib.mkIf cfg.enable {
+    programs.firefox = {
     enable = true;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
 
@@ -140,5 +146,6 @@
         };
       };
     };
+  };
   };
 }

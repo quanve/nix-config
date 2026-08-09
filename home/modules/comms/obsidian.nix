@@ -1,6 +1,13 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.myHome.modules.comms.obsidian;
+in
 {
-  home.packages = with pkgs; [
-    obsidian
-  ];
+  options.myHome.modules.comms.obsidian.enable = lib.mkEnableOption "comms/obsidian";
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      obsidian
+    ];
+  };
 }

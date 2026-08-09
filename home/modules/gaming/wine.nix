@@ -1,9 +1,16 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.myHome.modules.gaming.wine;
+in
 {
-  home.packages = with pkgs; [
-    protonplus
-    # portproton
-    heroic
-    wine
-  ];
+  options.myHome.modules.gaming.wine.enable = lib.mkEnableOption "gaming/wine";
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      protonplus
+      # portproton
+      heroic
+      wine
+    ];
+  };
 }

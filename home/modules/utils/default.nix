@@ -1,5 +1,4 @@
-{ config, pkgs, inputs, ... }:
-
+{ ... }:
 let
   utilsModules = [
     "utilities-wayland"

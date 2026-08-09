@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, libx, ... }:
+{ libx, ... }:
 {
   imports = [
     ./fuzzel.nix

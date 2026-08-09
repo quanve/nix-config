@@ -1,6 +1,9 @@
-{ config, pkgs, lib, user, ... }:
-
+{ pkgs, user, ... }:
 {
+  imports = [
+    ../modules
+  ];
+
   home.username      = user;
   home.homeDirectory = "/home/${user}";
 

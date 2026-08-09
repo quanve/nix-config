@@ -1,6 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, ... }:
+let
+  cfg = config.myHome.modules.utils.nixvim;
+in
 {
-  programs.nixvim = {
+  options.myHome.modules.utils.nixvim.enable = lib.mkEnableOption "utils/nixvim";
+
+  config = lib.mkIf cfg.enable {
+    programs.nixvim = {
     enable = true;
 
     enableMan = false;
@@ -44,7 +50,7 @@
         };
       };
     };
-    
+
     plugins.cmp-nvim-lsp.enable = true;
 
     keymaps = [
@@ -55,5 +61,6 @@
         options = { desc = "Toggle Neo-tree"; silent = true; };
       }
     ];
+  };
   };
 }
