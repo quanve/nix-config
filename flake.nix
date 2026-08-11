@@ -91,6 +91,17 @@
 
       treefmtEval = system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix;
 
+      mkIso =
+        variant:
+        (nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./iso/base.nix
+            (./iso + "/${variant}.nix")
+          ];
+        }).config.system.build.isoImage;
+
     in
     {
       nixosConfigurations = {
@@ -99,12 +110,15 @@
         # laptop  = mkNixos "laptop"  "x86_64-linux" [];
       };
 
+      packages.x86_64-linux = {
+        iso-minimal = mkIso "minimal";
+        iso-kde = mkIso "kde";
+      };
+
       formatter.x86_64-linux = (treefmtEval "x86_64-linux").config.build.wrapper;
 
       checks.x86_64-linux = {
         formatting = (treefmtEval "x86_64-linux").config.build.check self;
-        # test host is a skeleton (no hardware-configuration yet) and cannot
-        # build a bootable toplevel, so only check the real machine.
         desktop = self.nixosConfigurations.desktop.config.system.build.toplevel;
       };
     };
