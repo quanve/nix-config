@@ -159,6 +159,12 @@ the flake exposes only `nixosConfigurations` (home-manager is embedded). Add a
 - CI (`.github/workflows/ci.yml`) runs `nix flake check` on push/PR, which
   builds the `desktop` toplevel and verifies formatting.
 
+## Building ISO
+
+The build is done with `nix build.#packages.x86_64-linux.iso-${variant} --no-link --print-out-paths`,
+where ${variant} is `minimal` or `kde`.
+To create your own variant, you need to create a new file in `iso/`
+
 ## Adding things
 
 **New host:** create `hosts/<name>/default.nix` and
