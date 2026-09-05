@@ -2,7 +2,6 @@
 let
   systemModules = [
     "hardware-configuration"
-    "virtualization"
     "bootloader"
     "networking"
     "packages"
