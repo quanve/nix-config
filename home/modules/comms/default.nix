@@ -3,7 +3,7 @@ let
   commsModules = [
     "telegram"
     "obsidian"
-    "discord"
+    "vesktop"
   ];
 in
 {

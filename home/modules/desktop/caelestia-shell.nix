@@ -39,10 +39,10 @@ in
         settings = {
           toggles = {
             communication = {
-              discord = {
+              vesktop = {
                 enable = true;
-                match = [ { class = "discord"; } ];
-                command = [ "discord" ];
+                match = [ { class = "vesktop"; } ];
+                command = [ "vesktop" ];
                 move = true;
               };
               whatsapp = {

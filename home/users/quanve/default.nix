@@ -4,7 +4,7 @@
     comms = {
       telegram.enable = true;
       obsidian.enable = true;
-      discord.enable = true;
+      vesktop.enable = true;
     };
 
     core = {

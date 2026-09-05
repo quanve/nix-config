@@ -112,7 +112,7 @@ tagged_rule(music_player_tag, {
     "Spotify|Spotify Free"
 }, "initial_title")
 tagged_rule(communication_app_tag, {
-    "discord|equibop|vesktop",
+    "vesktop|equibop",
     "whatsapp"
 }, "class")
 tagged_rule(todo_app_tag, {

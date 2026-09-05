@@ -92,7 +92,7 @@ local json       = require("utils.json")
 local function default_config()
     return {
         communication = {
-            discord  = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
+            vesktop  = { enable = true, match = { { class = "vesktop" } }, command = { "vesktop" }, move = true },
             whatsapp = { enable = true, match = { { class = "whatsapp" } }, move = true },
         },
         music = {

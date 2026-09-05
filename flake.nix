@@ -27,6 +27,11 @@
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -85,6 +90,7 @@
                     ./home/users/${user}
                     (./home/users/${user}/host-specific + "/${hostname}")
                     inputs.caelestia-shell.homeManagerModules.default
+                    inputs.nixcord.homeModules.nixcord
                   ];
                   home.stateVersion = "25.05";
                 };
