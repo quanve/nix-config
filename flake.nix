@@ -22,6 +22,11 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -79,6 +84,7 @@
                     ./home/common
                     ./home/users/${user}
                     (./home/users/${user}/host-specific + "/${hostname}")
+                    inputs.caelestia-shell.homeManagerModules.default
                   ];
                   home.stateVersion = "25.05";
                 };
@@ -107,7 +113,6 @@
       nixosConfigurations = {
         desktop = mkNixos "desktop" "x86_64-linux" [ ];
         test = mkNixos "test" "x86_64-linux" [ ];
-        # laptop  = mkNixos "laptop"  "x86_64-linux" [];
       };
 
       packages.x86_64-linux = {

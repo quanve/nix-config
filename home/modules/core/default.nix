@@ -1,7 +1,6 @@
 { ... }:
 let
   coreModules = [
-    "terminal"
     "editors"
     "gnome"
   ];

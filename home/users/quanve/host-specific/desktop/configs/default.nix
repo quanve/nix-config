@@ -1,16 +1,13 @@
 { libx, ... }:
 {
   imports = [
-    ./fuzzel.nix
-    ./waybar.nix
-    ./dunst.nix
     ./foot.nix
     ./zsh.nix
   ];
 
   xdg.configFile = libx.configBuilder.make {
-    niri = {
-      path = ./niri;
+    hypr = {
+      path = ./hypr;
       executable = [ "switch_wallpaper.sh" ];
     };
   };

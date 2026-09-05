@@ -5,6 +5,8 @@ let
     "firefox"
     "themes"
     "media"
+    "hyprland"
+    "caelestia-shell"
   ];
 in
 {

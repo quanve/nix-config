@@ -6,9 +6,7 @@
       XCURSOR_SIZE = "24";
     };
     systemPackages = with pkgs; [
-      # System-level dependencies
       nvidia-vaapi-driver
-      xwayland-satellite
       wayland-protocols
       btrfs-progs
       libva-utils

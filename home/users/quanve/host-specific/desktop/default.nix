@@ -2,12 +2,9 @@
 {
   imports = [
     ./configs
-    # nixvim pulls an external flake input, so it's opted in per host
-    # instead of living in the global utils registry.
     ../../../../modules/utils/nixvim.nix
   ];
 
-  # Modules enabled only on this host (in addition to the user-level set).
   myHome.modules = {
     core.gnome.enable = true;
 
@@ -16,6 +13,8 @@
       firefox.enable = true;
       themes.enable = true;
       media.enable = true;
+      hyprland.enable = true;
+      caelestia-shell.enable = true;
     };
 
     dev = {

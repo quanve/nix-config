@@ -1,7 +1,5 @@
 { ... }:
 {
-  # Modules enabled for this user on every host.
-  # Host-specific modules are enabled in ./host-specific/<hostname>/default.nix.
   myHome.modules = {
     comms = {
       telegram.enable = true;
@@ -10,7 +8,6 @@
     };
 
     core = {
-      terminal.enable = true;
       editors.enable = true;
     };
 

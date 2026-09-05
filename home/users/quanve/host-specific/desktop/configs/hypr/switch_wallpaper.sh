@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 
 command -v wbg >/dev/null 2>&1 || { echo "Error: wbg not installed"; exit 1; }
-command -v zenity >/dev/null 2>&1 || { echo "Error: zenity not installed"; exit 1; }
-command -v niri >/dev/null 2>&1 || { echo "Error: niri not installed"; exit 1; }
 
 LAST_WALLPAPER="$HOME/.last_wallpaper"
-
-DISPLAY_NAME=$(niri msg outputs | awk '/^[a-zA-Z0-9]/ {print $1; exit}')
-[ -z "$DISPLAY_NAME" ] && { echo "Error: display not found"; exit 1; }
 
 run_wbg() {
     local file="$1"
     if [ -f "$file" ]; then
         pkill -x wbg || true
-        echo "Setting wallpaper: $file"
         wbg "$file" >/dev/null 2>&1 &
     else
         echo "Error: File $file not found"
