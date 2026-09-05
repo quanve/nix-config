@@ -4,9 +4,6 @@
     hostName = lib.mkDefault "nixos";
     networkmanager.enable = lib.mkDefault true;
     nftables.enable = lib.mkDefault true;
-    # wireless.enable = true; # Uncomment for wpa_supplicant
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
   time.timeZone = lib.mkDefault "Europe/Zurich";
@@ -30,11 +27,16 @@
     enable = lib.mkDefault true;
     settings.Resolve = {
       DNSSEC = lib.mkDefault "allow-downgrade";
-      Domains = lib.mkDefault [ "~." ];
+      Domains = lib.mkDefault [ ];
       FallbackDNS = lib.mkDefault [
         "1.1.1.1"
         "8.8.8.8"
       ];
     };
   };
+
+  networking.nameservers = lib.mkDefault [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
 }
