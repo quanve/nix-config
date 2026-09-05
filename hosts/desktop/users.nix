@@ -5,13 +5,13 @@
     description = user;
     extraGroups = [
       "networkmanager"
-      "wheel"
-      "libvirtd"
       "wireshark"
-      "keys"
+      "libvirtd"
+      "docker"
+      "wheel"
       "video"
       "input"
-      "docker"
+      "keys"
     ];
     packages = with pkgs; [ ];
     linger = true;

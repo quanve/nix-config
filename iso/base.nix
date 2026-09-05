@@ -1,11 +1,5 @@
-# Shared configuration for both live-ISO variants (minimal / kde).
-# Builds on the nixpkgs installer base: live `nixos` user, EFI+USB boot.
 { lib, pkgs, ... }:
 {
-  # The variant modules (`minimal.nix` / `kde.nix`) pick the concrete
-  # nixpkgs installer module (minimal vs. graphical-plasma6) and edition.
-
-  # VPN clients, present in every variant.
   programs.throne = {
     enable = true;
     tunMode.enable = true;
