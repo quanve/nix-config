@@ -87,7 +87,6 @@
       };
 
       key-bindings = {
-        # Zoom / Font size
         font-increase = "Control+plus Control+equal Control+KP_Add";
         font-decrease = "Control+minus Control+underscore Control+KP_Subtract";
         font-reset = "Control+0 Control+KP_0";

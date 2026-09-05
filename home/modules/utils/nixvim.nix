@@ -10,9 +10,6 @@ in
 {
   options.myHome.modules.utils.nixvim.enable = lib.mkEnableOption "utils/nixvim";
 
-  # Pulls the nixvim flake input. This module is NOT part of the utils
-  # registry: it's imported explicitly only by hosts/users that want it,
-  # so unused hosts never fetch or evaluate nixvim.
   imports = [
     inputs.nixvim.homeModules.nixvim
   ];

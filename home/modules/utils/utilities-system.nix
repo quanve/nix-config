@@ -13,7 +13,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       android-tools
-      # cpulimit
       usbutils
       openssl
       pamixer
@@ -26,7 +25,6 @@ in
       wget
       btop
       tree
-      # htop
       dig
       jq
       fd

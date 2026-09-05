@@ -13,9 +13,8 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      # imhex
-      binutils
       radare2
+      binutils
       strace
       ltrace
       ghidra

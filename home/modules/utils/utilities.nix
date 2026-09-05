@@ -14,11 +14,10 @@ in
     home.packages = with pkgs; [
       qbittorrent
       libreoffice
-      # wireshark
       localsend
       keepassxc
-      libnotify
       fastfetch
+      libnotify
       testdisk
       typst
     ];

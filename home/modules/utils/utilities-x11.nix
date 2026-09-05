@@ -11,10 +11,6 @@ in
   options.myHome.modules.utils.utilities-x11.enable = lib.mkEnableOption "utils/utilities-x11";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      # xkb-switch
-      # flameshot
-      # xclip
-    ];
+    home.packages = with pkgs; [ ];
   };
 }

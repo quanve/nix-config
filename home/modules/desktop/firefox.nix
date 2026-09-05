@@ -21,19 +21,16 @@ in
         };
 
         Preferences = {
-          # Passwords
           "signon.rememberSignons" = false;
           "signon.autofillForms" = false;
 
           "signon.firefoxRelay.feature" = "";
           "signon.management.page.breach-alerts.enabled" = false;
 
-          # Autofill
           "extensions.formautofill.creditCards.enabled" = false;
           "extensions.formautofill.addresses.enabled" = false;
           "extensions.formautofill.available" = "off";
 
-          # History
           "places.history.enabled" = false;
           "browser.history_expire_days" = 0;
           "privacy.clearOnShutdown.history" = true;
@@ -41,35 +38,29 @@ in
           "browser.formfill.enable" = false;
           "browser.sessionstore.privacy_level" = 2;
 
-          # Resist fingerprinting
           "privacy.resistFingerprinting" = true;
           "privacy.resistFingerprinting.letterboxing" = true;
           "general.platform.override" = "Win32";
 
-          # third-party cookies + cookie lifetime
-          "network.cookie.cookieBehavior" = 5; # 5 = reject all third-party + trackers
-          "network.cookie.lifetimePolicy" = 2; # 2 = sessions cookies
+          "network.cookie.cookieBehavior" = 5;
+          "network.cookie.lifetimePolicy" = 2;
           "privacy.firstparty.isolate" = true;
 
-          # Telemetry
           "datareporting.healthreport.uploadEnabled" = false;
           "toolkit.telemetry.unified" = false;
           "toolkit.telemetry.enabled" = false;
           "beacon.enabled" = false;
           "browser.send_pings" = false;
 
-          # WebGL / fonts / canvas — fingerprinting
           "webgl.disabled" = true;
-          "javascript.options.wasm" = false; # can break some sites
+          "javascript.options.wasm" = false;
           "layout.css.font-visibility.resistFingerprinting" = 1;
 
-          # DNS over HTTPS — Cloudflare / Quad9 / NextDNS
-          "network.trr.mode" = 3; # 3 = TRR only (DoH)
+          "network.trr.mode" = 3;
 
-          # Other
           "privacy.clearOnShutdown.offlineApps" = true;
           "browser.cache.disk.enable" = false;
-          "browser.cache.memory.enable" = false; # paranoia
+          "browser.cache.memory.enable" = false;
         };
 
         DontCheckDefaultBrowser = true;

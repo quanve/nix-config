@@ -12,7 +12,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      # gnome-control-center
       gnome-themes-extra
       dconf-editor
       libadwaita

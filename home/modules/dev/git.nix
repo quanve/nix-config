@@ -6,7 +6,6 @@ in
   options.myHome.modules.dev.git = {
     enable = lib.mkEnableOption "dev/git";
 
-    # Per-user variants: every user sets their own identity.
     userName = lib.mkOption {
       type = lib.types.str;
       default = "";
