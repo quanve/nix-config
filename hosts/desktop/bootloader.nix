@@ -3,27 +3,26 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
-    resumeDevice = "/dev/mapper/luks-ssd";
 
     kernelModules = [
-      "tun"
       "v4l2loopback"
       "tpm_tis"
+      "tun"
     ];
 
     kernelParams = [
-      "intel_iommu=on"
-      "iommu=pt"
+      "printk.always_kmsg_dump=1"
       "resume_offset=533760"
       "8250.nr_uarts=0"
-      "printk.always_kmsg_dump=1"
+      "amd_iommu=on"
+      "iommu=pt"
     ];
 
     blacklistedKernelModules = [
-      "bluetooth"
-      "btusb"
       "thunderbolt"
+      "bluetooth"
       "uvcvideo"
+      "btusb"
     ];
 
     extraModulePackages = with config.boot.kernelPackages; [
